@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <child-component></child-component>
+    </div>
+
+    <div id="app2"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+        // 컴포넌트간 데이터 전송을 위해 뷰 인스턴스를 생성 한다.
+        var eventBus = new Vue();
+
+        /*
+            button 클릭 이벤트 발생 시 showLog 메서드에서 eventBus를 통해 
+            triggerEventBus 트리거 이름으로 $emit() 통해 데이터 100을 전달 한다.
+        */
+        Vue.component('child-component', {
+            template: '<div>하위 컴포넌트 영역 입니다. <button v-on:click="showLog">show</button></div>',
+            methods: {
+                showLog: function() {
+                    eventBus.$emit('triggerEventBus', 100);
+                }
+            }
+        });
+
+        /*
+            eventBus에서 triggerEventBus 이름으로 이벤트가 이벤트가 발생하면
+            $on()로 받아 처리 한다.
+        */
+        var app = new Vue({
+            el: '#app',
+            created: function() {
+                eventBus.$on('triggerEventBus', function(value){
+                    console.log("이벤트를 전달받음. 전달받은 값 = " + value);
+                });
+            }
+        });
+
+        var app2 = new Vue({
+            el: '#app2',
+            created: function() {
+                eventBus.$on('triggerEventBus', function(value){
+                    console.log("이벤트를 전달받음 (2). 전달받은 값 = " + value);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
