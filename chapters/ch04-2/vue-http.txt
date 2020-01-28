@@ -1,0 +1,25 @@
+1. 뷰 리소스
+ - 뷰 리소스는 2016년 말에 공식적인 지원이 중단된 HTTP 통신 관련 VUE 라이브러리 이다.
+
+2. 액시오스 (Axios)
+ - 현재 뷰 커뮤니티에서 가장 많이 사용되는 HTTP통신 라이브러리 이다.
+ - Promise 기반의 API 형식이 다양하게 제공되어 별도의 로직을 구현할 필요 없이 원하는 로직 구현이 가능하다.
+
+3. 액시오스 설치 방법
+ - CDN을 이용한 방법.
+    > <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    > 위 자바스크립트 링크를 추가하면 사용이 가능 함.
+ - NPM을 이용한 방법(ES6 기준).
+    > 참고: https://github.com/axios/axios#installing
+
+4. 사용예
+ - HTTP GET 요청.
+    > axios.get('URL 주소').then().catch();
+ - HTTP POST 요청.
+    > axios.post('URL 주소').then().catch();
+ - HTTP 요청 옵션 설정.
+    > axios({
+        method: 'get',
+        url: 'URL 주소',
+        ....
+    });
