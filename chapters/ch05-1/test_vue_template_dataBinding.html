@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-bind:id="idA">아이디 바인딩</p>
+        <p v-bind:class="classA">클래스 바인딩</p>
+        <p v-bind:style="styleA">스타일 바인딩</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script> <!-- 라우터 CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- Axios -->
+    <script>
+        /*
+        ## 데이터 바인딩 ##
+        - 데이터 바인딩은 HTML 화면 요소를 뷰 인스턴스의 데이터와 연결하는 것을 의미 한다.
+        - 주요 문법으로는 {{ }} 문법과 v-bind 속성이 있다.
+        - v-once 속성은 뷰 데이터가 변경되어도 값을 바구고 싶지 않을 경우 사용 한다.
+        */
+        new Vue({
+            el: '#app',
+            data: {
+                idA: 10,
+                classA: 'container',
+                styleA: 'color: blue'
+            }
+        });
+    </script>
+</body>
+</html>
