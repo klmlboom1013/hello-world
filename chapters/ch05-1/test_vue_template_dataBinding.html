@@ -7,38 +7,90 @@
     <title>Document</title>
 </head>
 <body>
+    <!--
+        ## 데이터 바인딩 ##
+        - 데이터 바인딩은 HTML 화면 요소를 뷰 인스턴스의 데이터와 연결하는 것을 의미 한다.
+        - 주요 문법으로는 {{ }} 문법과 v-bind 속성이 있다.
+        - v-once 속성은 뷰 데이터가 변경되어도 값을 바구고 싶지 않을 경우 사용 한다.
+    -->
     <div id="app">
         <p v-bind:id="idA">아이디 바인딩A</p>
         <p v-bind:class="classA">클래스 바인딩A</p>
         <p v-bind:style="styleA">스타일 바인딩A</p>
-
-        <!-- v-bind 생략 가능 -->
-        <p :id="idB">아이디 바인딩B</p>
+        <p :id="idB">아이디 바인딩B</p> <!--// v-bind 생략 가능 -->
         <p :class="classB">클래스 바인딩B</p>
         <p :style="styleB">스타일 바인딩B</p>
     </div>
+    <br>
+
+    <!--
+        ## 자바스크립트 표현식 ##
+        - 선언문은 사용 불가능 {{ var a= 10; }}
+        - 분기구문 사용 불가능 {{ if(true) {return 10;} }}
+    -->
+    <div id="app2">
+        <p>{{ (idA > idB) ? true : false }}</p><!-- 삼항연산자 사용 가능 -->
+        <p>{{ reversedMessage }}</p> <!-- 복잡한 연산은 computed를 통해 데이터 속성을 자동으로 계산한값을 리턴 받아 화면에 노출한다.-->
+    </div>
+    <br>
+
+    <!--
+        ## 디렉티브 (Directive) ##
+        - HTML 태그 안에 v- 접두사를 가지는 모든 속성을 의미 함.
+            > v-if      : 지정한 뷰 데이터 값이 true인 경우 해당 태그를 화면에 노출. (false인 경우 HTML 문서내 해당 테그를 완전히 삭제 한다.)
+            > v-for     : 지정한 뷰 데이터의 수 만큼 해당 태그를 반복 노출.
+            > v-show    : v-if와 유사하지만 뷰 데이터가 false일 경우 display:none; 으로 스타일 속성만 변경 된다.
+            > v-bind    : HTML태그의 기본 속성과 뷰 데이터 속성을 연결 한다.
+            > v-on      : 화면요소의 이벤트를 감지(click, change, check 등..)하여 처리할 때 사용.
+            > v-model   : form에서 주로 사용되는 속성.
+                          form에 입력한 값을 뷰 인스턴스의 데이터와 즉시 동기화 함.
+                          사용자로부터 입력받은 값을 저장하여 서버로 보내거나, watch와 같은 고급 속성을 이용한 추가 로직 수행 가능.
+                          <input> <select> <textarea> 태그에만 사용 가능.
+    -->
+    <div id="app3">
+        <a v-if="flag">두잇 vue.js</a>
+        <ul>
+            <li v-for="system in systems">{{ system }}</li>
+        </ul>
+        <p v-show="flag">두잇 vue.js</p>
+        <h5 v-bind:id="uid">뷰 입문</h5>
+        <button v-on:click="popupAlert">경고창 버튼</button>
+    </div>
+    <br>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script> <!-- 라우터 CDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- Axios -->
     <script>
-        /*
-        ## 데이터 바인딩 ##
-        - 데이터 바인딩은 HTML 화면 요소를 뷰 인스턴스의 데이터와 연결하는 것을 의미 한다.
-        - 주요 문법으로는 {{ }} 문법과 v-bind 속성이 있다.
-        - v-once 속성은 뷰 데이터가 변경되어도 값을 바구고 싶지 않을 경우 사용 한다.
-        */
-        new Vue({
-            el: '#app',
+        var app = new Vue({
             data: {
                 idA: 10,
                 classA: 'containerA',
                 styleA: 'color: blue',
                 idB: 11,
                 classB: 'containerB',
-                styleB: 'color: red'
+                styleB: 'color: red',            
+                message: 'Hello Vue !!'
             }
-        });
+        }).$mount('#app');
+
+        var app2 = new Vue({
+            data: {
+                message: 'Hello Vue !!'
+            },
+            computed: {
+                reversedMessage: function(){
+                    return this.message.split('').reverse().join('');
+                }
+            }
+        }).$mount('#app2');
+
+        var app3 = new Vue({
+            data: {
+                flag: true,
+                system: ['AOS', 'IOS', 'Window']
+            }
+        }).$mount('app3');
     </script>
 </body>
 </html>
