@@ -55,8 +55,16 @@
         <p v-show="flag">두잇 vue.js</p>
         <h5 v-bind:id="uid">뷰 입문</h5>
         <button v-on:click="popupAlert">경고창 버튼</button>
+        <button v-on:click="clickBtn(10)">Click</button> <!-- 인자값 넘기기 -->
+        <button v-on:click="clickBtn(plus())">Click</button> <!-- 인자값 넘기기 -->
+        <br>
+        <button v-on:click="clickBtn2">Click2</button> 
     </div>
     <br>###############<br>
+
+    <div id="app4">
+        <input v-model="message">
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script> <!-- 라우터 CDN -->
@@ -81,6 +89,11 @@
                 message: 'Hello Vue !!'
             },
             computed: {
+                /*
+                ### computed 장점
+                    1. data 속성의 값이 변경되면 자동으로 재연산을 진행 한다.
+                    2. 한번 연산된 값은 캐싱되어 동일한 연산을 반복해서 하지 않는다.
+                */ 
                 reversedMessage: function(){
                     return this.message.split('').reverse().join('');
                 }
@@ -96,9 +109,38 @@
             methods: {
                 popupAlert: function(){
                     return alert("test");
+                },
+                clickBtn: function(arg){
+                    return alert(arg);
+                },
+                plus: function(){
+                    return 10 + 10;
+                },
+                clickBtn2: function(event){
+                    console.log(event);
+                    // event 인자를 정의하면 해당 돔 요소의 이벤트 객체에 접근할 수 있다.
                 }
             }
         }).$mount('#app3');
+
+        var app4 = new Vue({
+            data: {
+                message: 'Hello Vue.js!'
+            },
+            watch: {
+                /*
+                ### watch 속성 ###
+                    - 데이터 변화를 감지하여 자동으로 특정 로직을 수행 한다.
+                    - computed속성은 내장 API를 수행하는 간단한 연상정도로 적합 하지만,
+                     watch 속성은 데이터 호출과 같이 상대적으로 시간이 많이 소요되는 비동기 처리에 적합 하다.
+                */
+                message: function(data){
+                    console.log("message의 값이 변경된다 : ", data);
+                }
+            }
+        }).$mount('#app4');
+
+
     </script>
 </body>
 </html>
